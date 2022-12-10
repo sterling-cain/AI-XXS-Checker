@@ -8,6 +8,11 @@ def check_xss(url):
     r = requests.get(url, params={'q': payload})
     if payload in r.text:
       return True
+
+    # Check for other indicators of XSS vulnerability
+    if '<script>' in r.text.lower() or 'javascript:' in r.text.lower():
+      return True
+
   return False
 
 if __name__ == '__main__':
